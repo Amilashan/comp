@@ -1,0 +1,194 @@
+
+ private bool isValidEmail(String email)
+        {
+            try
+            {
+                var mailaddress = new System.Net.Mail.MailAddress(email);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+    //name
+    String firstname = textBox1.Text.ToString();
+    String lastname = textBox2.Text.ToString();
+    String username = textBox3.Text.ToString();
+
+    //password
+    String password = textBox4.Text.ToString();
+    string cpassword = textBox5.Text.ToString();
+
+    //email
+    String email = textBox6.Text.ToString();
+
+    bool a = isValidEmail(email);
+    MessageBox.Show(a.ToString());
+
+
+    //number
+    String number = textBox7.Text.ToString();
+
+    //radio gender
+    String male = radioButton1.Text.ToString();
+    String female = radioButton2.Text.ToString();
+    String gvalue = "";
+
+    //course
+    String couvalue = comboBox1.Text.ToString();
+    MessageBox.Show(couvalue);
+
+    //national
+    String sl = checkBox1.Text.ToString();
+
+    String other = checkBox2.Text.ToString();
+    String sval = "";
+    String otherval = "";
+
+
+    MessageBox.Show(other);
+
+
+
+
+    //name validation
+    if (String.IsNullOrEmpty(firstname) || String.IsNullOrEmpty(lastname) || String.IsNullOrEmpty(username))
+    {
+        MessageBox.Show("File Names faild", "Name Validation", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
+
+    //password validation
+    if (String.IsNullOrEmpty(password) || String.IsNullOrEmpty(cpassword))
+    {
+        MessageBox.Show("Password is Empty", "password Validation", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
+
+    //confirm password
+    if (password == cpassword)
+    {
+        MessageBox.Show("passowrd is OK", "Password Validation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+    }
+    else
+    {
+        MessageBox.Show("password is not matched", "password vallidation", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
+
+
+    //email validation
+    if (string.IsNullOrEmpty(email))
+    {
+        MessageBox.Show("Email is empty", "Email Validation", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
+
+    else if (isValidEmail(email))
+    {
+        MessageBox.Show("Email is Ok", "Email Validation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+    }
+    else
+    {
+        MessageBox.Show("Email is Wrong", "Email Validation", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
+
+    //Number Validation
+    if (number.Length > 10)
+    {
+        MessageBox.Show("Invaild Phone Number", "Number validation", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
+
+    //Gender Valiadtion
+    if (radioButton1.Checked || radioButton2.Checked)
+    {
+        if (radioButton1.Checked)
+        {
+            MessageBox.Show(male);
+            gvalue = male;
+        }
+        else if (radioButton2.Checked)
+        {
+            MessageBox.Show(female);
+            gvalue = female;
+        }
+    }
+    else
+    {
+        MessageBox.Show("Not Selected Gender", "Gender validation", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
+
+    //age calculator
+
+    DateTime birthdate = dateTimePicker1.Value;
+    DateTime currentdate = DateTime.Now;
+    string datestring = birthdate.ToString("yyyy-mm-dd");
+
+    int age = currentdate.Year - birthdate.Year;
+    string agestring = age.ToString();
+    MessageBox.Show(agestring);
+
+    //course Validation
+    if (couvalue == "Couerses")
+    {
+        MessageBox.Show("Not Selected Courses", "Courses validation", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
+
+    //Nationality validation
+    if (checkBox1.Checked || checkBox2.Checked)
+    {
+        if (checkBox1.Checked && checkBox2.Checked)
+        {
+            sval = checkBox1.Text.ToString();
+            otherval = checkBox2.Text.ToString();
+        }
+        else if (checkBox1.Checked)
+        {
+            sval = checkBox1.Text.ToString();
+        }
+        else if (checkBox2.Checked)
+        {
+            otherval = checkBox2.Text.ToString();
+        }
+
+    }
+    else
+    {
+        MessageBox.Show("Not Selected Nationality", "Nationality validation", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
+
+    //show all data
+    MessageBox.Show(
+          $"First Name is {firstname} \n " +
+          $"\n Last Name is {lastname} \n User Name is {username} \n Date of birth is {datestring}\n" +
+          $"\n Email is {email}\n" +
+          $"\n Mobile is {number}\n" +
+          $"\n Gender is {gvalue}\n" +
+          $"\n Date Of Birth is {datestring}\n" +
+          $"\n Age is {agestring} \n Course is {couvalue}\n" +
+          $"\n Nationality is {sval} {otherval} \n");
+
+
+
+
+
+
+
+private void textBox7_KeyPress(object sender, KeyPressEventArgs e)
+{
+    if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+    {
+        e.Handled = true;
+        MessageBox.Show("You can only add numbers", "Number validation", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
+
+}
+
+private void button2_Click(object sender, EventArgs e)
+{
+    OpenFileDialog openFileDialog = new OpenFileDialog();
+    openFileDialog.Filter = "[image files(* .jpg; * .png; * .jpeg; * .gif; * .bmp)| * .jpg; * .png; * .jpeg; * .gif; * .bmp]";
+    if (openFileDialog.ShowDialog() == DialogResult.OK)
+    {
+        label1.Text = openFileDialog.FileName;
+        pictureBox1.Image = new Bitmap(openFileDialog.FileName);
+    }
+}
